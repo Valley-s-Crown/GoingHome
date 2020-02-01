@@ -1,0 +1,56 @@
+///New step event
+var bbox_side;
+
+if keyboard_check(vk_left){
+	volx -= speedx;
+} if keyboard_check(vk_right){
+	volx += speedx;
+}
+
+if (tilemap_get_at_pixel(tilemap, bbox_left, bbox_bottom+1) || (tilemap_get_at_pixel(tilemap, bbox_right, bbox_bottom+1))) {
+	canJump = 5;
+	voly = 0;
+} 
+else {
+	voly+=1;
+	if (canJump > 0){
+		canJump-=1;
+	}
+}
+if (keyboard_check(vk_up)){
+	if (canJump>0) {
+		canJump = 0;
+		voly += -jumpPower;
+		yoshi = 5;
+	} else if (yoshi){
+		voly += -yoshiPower;
+	}
+}
+if (yoshi){
+	yoshi -= 1;
+}
+
+if (volx != 0) {
+	volx -= sign(volx);
+}
+if (abs(volx) > max_speed) {
+	volx = sign(volx)*max_speed;
+}
+
+if (volx >0) bbox_side = bbox_right; else bbox_side = bbox_left;
+if (tilemap_get_at_pixel(tilemap, bbox_side+volx, bbox_top)!=0) or (tilemap_get_at_pixel(tilemap, bbox_side + volx, bbox_bottom)!=0){
+	 if (volx > 0) x = x - (bbox_right mod 32) + 31;
+	else x = x - (bbox_left mod 32)
+	volx = 0;
+}
+
+x += volx;
+
+if (voly >0) bbox_side = bbox_bottom; else bbox_side = bbox_top;
+if (tilemap_get_at_pixel(tilemap, bbox_left, bbox_side+voly)!=0) or (tilemap_get_at_pixel(tilemap, bbox_right, bbox_side+voly)!=0){
+	if (voly > 0) y = y - (bbox_bottom mod 32) + 31;
+	else y = y - (bbox_top mod 32);
+	voly = 0
+}
+
+y += voly;

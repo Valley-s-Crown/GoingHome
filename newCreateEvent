@@ -1,0 +1,16 @@
+///New create event
+gothere=0
+volx = 0;
+voly = 0;
+acelx = 0;
+acely = 0;
+grav = -3;
+speedx = 2;
+max_speed = 7
+
+jumpPower = 13;
+yoshiPower = 1;
+canJump = 0;
+yoshi = 0;
+
+tilemap = layer_tilemap_get_id("Collision")
